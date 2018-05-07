@@ -39,6 +39,8 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
+            ['label' => 'Profile', 'url' => ['/site/profile'], 'visible' => !Yii::$app->user->isGuest],
+            ['label' => 'Add', 'url' => ['/site/add'], 'visible' => !Yii::$app->user->isGuest],
             ['label' => 'Login', 'url' => ['/site/login'], 'visible' => Yii::$app->user->isGuest],
             ['label' => 'Sign up', 'url' => ['/site/registration'], 'visible' => Yii::$app->user->isGuest],
 
@@ -70,8 +72,6 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
-
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
 </footer>

@@ -13,6 +13,17 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     }
 
     /**
+     * @return array the validation rules.
+     */
+    public function rules()
+    {
+        return [
+            ['about', 'string', 'max' => 255],
+            ['photo', 'file', 'extensions' => 'png, jpg'],
+        ];
+    }
+
+    /**
      * {@inheritdoc}
      */
     public static function findIdentity($id)

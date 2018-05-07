@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\RegistrationForm;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -87,6 +88,27 @@ class SiteController extends Controller
     }
 
     /**
+     * Login action.
+     *
+     * @return Response|string
+     */
+    public function actionRegistration()
+    {
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $model = new RegistrationForm();
+        if ($model->load(Yii::$app->request->post()) && $model->singUp()) {
+            return $this->goBack();
+        }
+
+        return $this->render('registration', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
      * Logout action.
      *
      * @return Response
@@ -96,33 +118,5 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
-    }
-
-    /**
-     * Displays contact page.
-     *
-     * @return Response|string
-     */
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
-            return $this->refresh();
-        }
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
-    public function actionAbout()
-    {
-        return $this->render('about');
     }
 }

@@ -7,6 +7,8 @@ use yii\db\ActiveRecord;
 
 class User extends ActiveRecord implements \yii\web\IdentityInterface
 {
+    public $image;
+
     public static function tableName()
     {
         return "users";
@@ -19,7 +21,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     {
         return [
             ['about', 'string', 'max' => 255],
-            ['photo', 'file', 'extensions' => 'png, jpg'],
+            ['image', 'file', 'extensions' => 'png, jpg'],
         ];
     }
 
@@ -101,5 +103,13 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
         } catch (\Exception $exception) {
 
         }
+    }
+
+    public function beforeSave($insert)
+    {
+        if($this->image){
+            $this->photo = $this->image;
+        }
+        return parent::beforeSave($insert);
     }
 }

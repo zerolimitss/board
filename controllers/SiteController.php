@@ -67,7 +67,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $query = Ad::find();
+        $query = Ad::find()->orderBy(['id' => SORT_DESC]);
         $pages = new Pagination(['totalCount' => $query->count(), 'pageSize' => 20, 'forcePageParam' => false, 'pageSizeParam' => false]);
         $ads = $query->offset($pages->offset)->limit($pages->limit)->all();
         return $this->render("index", compact("ads", "pages"));
@@ -114,58 +114,6 @@ class SiteController extends Controller
         return $this->render('registration', [
             'model' => $model,
         ]);
-    }
-
-    public function actionProfile(){
-        if (Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $model = User::findByUsername(Yii::$app->user->identity->username);
-        if ($model->load(Yii::$app->request->post())) {
-            $model->photo = UploadedFile::getInstance($model, 'photo');
-            $model->save();
-            if ($model->photo) {
-                if ($model->validate()) {
-                    $model->photo->saveAs(Yii::getAlias("@webroot").'/images/' . $model->photo->baseName . '.' . $model->photo->extension);
-                }
-            }
-        }
-
-        return $this->render('profile', [
-            'model' => $model,
-        ]);
-    }
-
-    public function actionAdd(){
-        if (Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $model = new Ad();
-        if ($model->load(Yii::$app->request->post())) {
-            $model->user_id = Yii::$app->user->id;
-            $model->save();
-            \Yii::$app->getSession()->setFlash('success', 'Your advertisement has been added!');
-            return $this->redirect(['site/add']);
-        }
-
-        return $this->render('add', [
-            'model' => $model,
-        ]);
-    }
-
-    public function actionDeletePhoto(){
-        if (Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $model = User::findByUsername(Yii::$app->user->identity->username);
-        unlink(Yii::getAlias("@webroot") . '/images/' . $model->photo);
-        $model->photo = "";
-        $model->save();
-
-        return $this->redirect(['site/profile']);
     }
 
     /**

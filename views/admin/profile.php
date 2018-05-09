@@ -20,18 +20,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'options' => ['enctype' => 'multipart/form-data']
     ]); ?>
 
-    <?php /*echo $form->field($model, 'about')->widget(CKEditor::className(),[
-        'editorOptions' => ElFinder::ckeditorOptions([
-            'elfinder',
-        ],[]),
-    ]); */?>
     <?php echo $form->field($model, 'about')->textInput(['maxLength'=>true]) ?>
 
     <?php if(!empty($model->photo)):?>
         <img src="/images/<?=$model->photo?>" alt="" width="200"><br>
-        <a href="<?=Url::to(['site/delete-photo'])?>">Удалить</a>
+        <a href="<?=Url::to(['admin/delete-photo'])?>">Delete</a>
     <?php endif;?>
-    <?= $form->field($model, 'photo')->fileInput() ?>
+    <?= $form->field($model, 'image')->fileInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>

@@ -14,7 +14,7 @@ $this->title = 'Profile';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-login">
-    <h1><?= Html::encode($this->title) . ": ". Yii::$app->user->identity->username?></h1>
+    <h1><?= Html::encode($this->title) . ": ". Html::encode(Yii::$app->user->identity->username)?></h1>
 
     <?php $form = ActiveForm::begin([
         'options' => ['enctype' => 'multipart/form-data']

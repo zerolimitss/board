@@ -2,6 +2,9 @@
 
 /* @var $this yii\web\View */
 
+use yii\helpers\Html;
+use yii\helpers\HtmlPurifier;
+
 $this->title = 'Board';
 ?>
 <div class="site-index">
@@ -17,8 +20,8 @@ $this->title = 'Board';
 
             <?foreach($ads as $item): ?>
                 <div class="col-md-4">
-                    <h3><?=$item->title?></h3>
-                    <?=$item->text?>
+                    <h3><?=Html::encode($item->title)?></h3>
+                    <?=HtmlPurifier::process($item->text)?>
                 </div>
             <?endforeach;?>
 

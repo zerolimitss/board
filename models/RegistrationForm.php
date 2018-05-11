@@ -26,6 +26,7 @@ class RegistrationForm extends Model
             [['username', 'password', 'password_repeat'], 'required'],
             ['password_repeat', 'compare', 'compareAttribute' => 'password'],
             ['username', 'unique', 'targetClass' => 'app\models\User'],
+            ['username', 'unique', 'targetClass' => 'app\models\User'],
         ];
     }
 

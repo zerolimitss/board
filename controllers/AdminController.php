@@ -62,7 +62,7 @@ class AdminController extends Controller
             $model->user_id = Yii::$app->user->id;
             $model->save();
             \Yii::$app->getSession()->setFlash('success', 'Your advertisement has been added!');
-            return $this->redirect(['site/add']);
+            return $this->redirect(['site/index']);
         }
 
         return $this->render('add', [
